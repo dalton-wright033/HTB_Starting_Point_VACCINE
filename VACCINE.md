@@ -115,7 +115,7 @@ sudo -l
     - SQLMap ```--os-shell``` is not very stable and has limited features compared to a reverse shell
     - If possible, SSH is a more stable way to navigate the target OS compared to a reverse shell. This is beacuse of the multiple layers data must transmit through for a reverse shell
 - **Strategic Takeaway:** 
-    - Chaining novice tactic, techniques, and procedures can create an effective progression through the kill chain when applied in the correct situation
+    - Chaining novice tactics, techniques, and procedures can create an effective progression through the kill chain when applied in the correct situation
     - Familiarity with the tools to use goes a long way
 - **Mistakes/Pivot Points:**
     - I attempted to use the SQLMap os-shell to establish a reverse shell. This was a challenge as the command was not allowing for a connection to establish
