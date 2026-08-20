@@ -43,6 +43,7 @@ nmap  -sV 10.129.48.112
 **Findings & Analysis:**
 - 21: FTP - Potential enumeration surface.
 - 80: HTTP - Web server.
+- 22: SSH
 
 **Deep Dive Enumeration:**
 - FTP: Anonymous access $\rightarrow$ found backup.zip.
