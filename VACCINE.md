@@ -1,4 +1,4 @@
-# Hack The Box — [Machine Name]
+# Hack The Box — VACCINE
 ## Security Assessment Report
 
 ###  Metadata
