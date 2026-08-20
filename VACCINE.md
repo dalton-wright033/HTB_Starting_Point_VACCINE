@@ -8,7 +8,7 @@
 - **Difficulty:** [Very Easy]
 - **Date Completed:** [08/20/2026]
 - **Author:** [Teal (Dalton Wright)]
-
+- **Disclaimer:** IP of target machine changed throughout lab because of machine restarts
 ---
 
 ###  EXECUTIVE SUMMARY
@@ -48,14 +48,24 @@ nmap  -sV 10.129.48.112
 - FTP: Anonymous access $\rightarrow$ found backup.zip.
 
 #### 2. Exploitation (Initial Access)
-**Vulnerability Identified:** FTP anonymous access
+**Vulnerability Identified:** FTP anonymous access, weak passwords,  SQL injection
 **Methodology:**
 1. Exploit anonymous FTP login: Enumerate FTP server for interesting files
-2. Found password protected .zip file: Extracted .zip to attacking machine
+![VACCINE_FTP](Screenshots/ftp_access.png)   
+
+2. Found password protected .zip file: Extracted .zip to attacking machine   
+
 3. Used zip2John: allows Extraction of zip password hash for cracking
+![VACCINE_Zip_crack](Screenshots/john_zip_crack.png)   
+
 4. Used John the Ripper: Crack hash of zip
-5. Found index.php: Contained has of admin password for admin login page
+![VACCINE_Zip_pass](Screenshots/john_zip_pass.png)   
+
+5. Found index.php: Contained hash of admin password for admin login page
+![VACCINE_index](Screenshots/index_pass.png)   
+
 6. Used John: Cracked admin password and gained access to admin dashboard
+
 7. Used SQLmap: Found vulnerable input field to Postgress DB
 7. Injected os commands into input field: Gained navigation of hosting machine
 
