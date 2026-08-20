@@ -95,7 +95,7 @@ sudo -l
 
 **Analysis:** 
 
-- The postgres user had sudo privelges to run the text editor, Vim. This worked for privilege escalation because Vim is able to execute external commands under the permissions of user that executed the editor. Since ```sudo vim``` was used, Vim was able to execute commands with root privilege.
+- The postgres user had sudo privileges to run the text editor, Vim. This worked for privilege escalation because Vim is able to execute external commands under the permissions of user that executed the editor. Since ```sudo vim``` was used, Vim was able to execute commands with root privilege.
 ![VACCINE_Root_poc](Screenshots/root_poc.png)   
 
 
