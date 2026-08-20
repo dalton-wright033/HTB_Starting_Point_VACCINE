@@ -109,7 +109,7 @@ sudo -l
 
 ###  LESSONS LEARNED
 - **Technical Takeaway:** 
-    - John the Ripper is a very useful tool for cracking weak password hashes.
+    - John the Ripper is a very useful tool for cracking weak password hashes
     - If a particular format (e.g. MD5) is used, to view the password, the format must also be declared in the ```--show``` switch
     - SQLMap is also a very useful tool used automate the SQL injection process
     - SQLMap ```--os-shell``` is not very stable and has limited features compared to a reverse shell
