@@ -3,28 +3,29 @@
 
 ###  Metadata
 - **Platform:** Hack The Box
-- **Lab Type:** [Starting Point / Easy / Medium / Hard]
-- **Operating System:** [Linux / Windows]
-- **Difficulty:** [Difficulty]
-- **Date Completed:** [MM/DD/YYYY]
-- **Author:** [Your Name or Alias]
+- **Lab Type:** [Starting Point]
+- **Operating System:** [Linux]
+- **Difficulty:** [Very Easy]
+- **Date Completed:** [08/20/2026]
+- **Author:** [Teal (Dalton Wright)]
 
 ---
 
 ###  EXECUTIVE SUMMARY
-**Risk Level:** [Critical / High / Medium / Low]
+**Risk Level:** [Critical]
 
 **Overview:**
 [Provide a 3-5 sentence summary of the engagement. Identify the primary entry point, the critical flaw that allowed escalation, and the final impact. Write this as if it were for a non-technical manager.]
+The web application was compromised due to a combination of weak passwords, invalidated input fields, sudo misconfigurations. The critical flaw that lead to priviledge escalation was improper sudo configurations on the linux server hosting the web application. This led to root access via a text editor. With root access an attacker can arbitrarily excute commands to control the server with a potentially heavy impact on servie.
 
 **Primary Root Cause:** [e.g., Lack of input validation / Missing patch for CVE-XXXX / Sudo misconfiguration]
-
+ability to anonymously access FTP server to gather credentials
 ---
 
 ###  ATTACK PATH SUMMARY
-1. **Reconnaissance:** Found open port [XX] running [Service].
-2. **Initial Access:** Exploited [Vulnerability] via [Tool/Method] $\rightarrow$ Obtained `www-data` shell.
-3. **Privilege Escalation:** Identified [Misconfiguration/Vulnerability] $\rightarrow$ Escalated to `root`.
+1. **Reconnaissance:** Found open port 21 running FTP.
+2. **Initial Access:** Exploited invalidated input field via SQLMap $\rightarrow$ Obtained os-shell/reverse shell.
+3. **Privilege Escalation:** Identified sudo misconfiguration $\rightarrow$ Escalated to `root`.
 4. **Objective:** Captured User and Root flags.
 
 ---
@@ -34,27 +35,34 @@
 #### 1. Enumeration & Reconnaissance
 **Initial Scan:**
 ```bash
-nmap -sC -sV -oN nmap.txt [TARGET IP]
+nmap  -sV 10.129.48.112
 ```
+
+![VACCINE_NMAP](Screenshots/nmap.png)   
+
 **Findings & Analysis:**
-- [Port XX]: [Service Name] - [Observation: e.g., "Running outdated version 2.4, known for CVE-XXXX"].
-- [Port YY]: [Service Name] - [Observation].
+- 21: FTP - Potential enumeration surface.
+- 80: HTTP - Web server.
 
 **Deep Dive Enumeration:**
-- [Service]: [Tool Used] $\rightarrow$ [Finding].
-- [Method]: [Observation of a specific behavior or leak].
+- FTP: Anonymous access $\rightarrow$ found backup.zip.
 
 #### 2. Exploitation (Initial Access)
-**Vulnerability Identified:** [e.g., Unrestricted File Upload / Weak Credentials]
+**Vulnerability Identified:** FTP anonymous access
 **Methodology:**
-1. [Step 1]: [Describe why you did this]
-2. [Step 2]: [Tool/Payload used]
+1. Exploit anonymous FTP login: Enumerate FTP server for interesting files
+2. Found password protected .zip file: Extracted .zip to attacking machine
+3. Used zip2John: allows Extraction of zip password hash for cracking
+4. Used John the Ripper: Crack hash of zip
+5. Found index.php: Contained has of admin password for admin login page
+6. Used John: Cracked admin password and gained access to admin dashboard
+7. Used SQLmap: Found vulnerable input field to Postgress DB
+7. Injected os commands into input field: Gained navigation of hosting machine
 
 **Payload Used:**
-```bash
-# Paste payload or command here
-```
-**Result:** [e.g., Received reverse shell on port 4444 as user `service-account`]
+![VACCINE_SQLmap](Screenshots/SQLmap_command.png)
+**Result:** 
+- Received reverse shell on port 4444 as postgres user
 
 #### 3. Privilege Escalation
 **Internal Enumeration:**
